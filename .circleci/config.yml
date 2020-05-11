@@ -4,7 +4,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.13-alpine
+      - image: circleci/golang:latest
 #    machine:
 #      image: ubuntu-1604:201903-01
       # not supported in the free plan
