@@ -29,7 +29,7 @@ jobs:
           command: docker build --progress=plain -t notary_client .
 #      - run: ./buildscripts/circle_parallelism.sh
       - run: docker-compose -f docker-compose.yml down -v && docker-compose -f docker-compose.rethink.yml down -v
-      - run: docker ls      
+      - run: docker image ls      
       - run: 
            name: docker login
            command: |
