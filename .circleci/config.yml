@@ -35,7 +35,7 @@ jobs:
            command: |
              echo "$DOCKER_PASSWORD" | \
                docker login --username "$DOCKER_LOGIN" --password-stdin 
-      - run: docker push https://hub.docker.com/repository/docker/brianoh1979/notary/wilson
+      - run: docker push brianoh1979/notary
 #orbs:
 #  artifactory: circleci/artifactory@1.0.0
 #version: 2.1
