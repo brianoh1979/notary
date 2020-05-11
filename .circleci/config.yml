@@ -1,6 +1,6 @@
 #Adding in comment to trigger commit
 
-#version: 2
+version: 2
 jobs:
   build:
     machine:
@@ -13,9 +13,9 @@ jobs:
     steps:
       - add_ssh_keys
       - checkout
-      - artifactory/install
-      - artifactory/configure
-      - artifactory/build-integration
+#      - artifactory/install
+#      - artifactory/configure
+#      - artifactory/build-integration
       - run:
           name: "Docker Info"
           command: |
@@ -29,19 +29,25 @@ jobs:
           command: docker build --progress=plain -t notary_client .
 #      - run: ./buildscripts/circle_parallelism.sh
       - run: docker-compose -f docker-compose.yml down -v && docker-compose -f docker-compose.rethink.yml down -v
-
-orbs:
-  artifactory: circleci/artifactory@1.0.0
-version: 2.1
-workflows:
-  custom-docker-example:
-    jobs:
-      - build
-      - artifactory/docker-publish:
-          docker-registry: orbdemos-docker-local.jfrog.io
-          docker-steps:
-            - run: docker build -t $DOCKERTAG docker-publish-assets
-          docker-tag: >-
-            orbdemos-docker-local.jfrog.io/hello-world-custom:1.0-${CIRCLE_BUILD_NUM}
-          name: Docker Publish Custom Build
-          repository: docker-local
+      
+      - run: 
+           name: docker login
+           command: |
+             echo "$DOCKER_PASSWORD" | \
+               docker login --username "$DOCKER_LOGIN" --password-stdin 
+      - run: docker push https://hub.docker.com/repository/docker/brianoh1979/notary/wilson
+#orbs:
+#  artifactory: circleci/artifactory@1.0.0
+#version: 2.1
+#workflows:
+#  custom-docker-example:
+#    jobs:
+#      - build
+#      - artifactory/docker-publish:
+#          docker-registry: orbdemos-docker-local.jfrog.io
+#          docker-steps:
+#            - run: docker build -t $DOCKERTAG docker-publish-assets
+#          docker-tag: >-
+#            orbdemos-docker-local.jfrog.io/hello-world-custom:1.0-${CIRCLE_BUILD_NUM}
+#          name: Docker Publish Custom Build
+#          repository: docker-local
