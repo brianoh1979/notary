@@ -3,10 +3,8 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: buildpack-deps:trusty
-#    machine:
-#      image: ubuntu-1604:201903-01
+    machine:
+      image: ubuntu-1604:201903-01
       # not supported in the free plan
       # docker_layer_caching: true
     working_directory: ~/go/src/github.com/theupdateframework/notary
@@ -26,5 +24,5 @@ jobs:
       - run:
           name: "Build image"
           command: docker build --progress=plain -t notary_client .
-      - run: ./buildscripts/circle_parallelism.sh
+#      - run: ./buildscripts/circle_parallelism.sh
       - run: docker-compose -f docker-compose.yml down -v && docker-compose -f docker-compose.rethink.yml down -v
