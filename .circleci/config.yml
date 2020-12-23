@@ -38,7 +38,7 @@ jobs:
       - run: docker push 
 #orbs:
 #  artifactory: circleci/artifactory@1.0.0
-#version: 2.1
+version: 2
 workflows:
   custom-docker-example:
     jobs:
